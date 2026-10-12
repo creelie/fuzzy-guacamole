@@ -44,7 +44,8 @@ I_{n,wps} = I_{n,term} = I_{n,loc} for every n >= 2.
      index 1389.
 5. 1389 is not in I_{4,wps}.
    - `search.c` enumerates all 1,301,769,806 sorted 5-tuples with sum 1389.
-     None is well-formed and canonical under Kasprzyk's age criterion.
+     None passes Kasprzyk's age criterion, whether or not it is well-formed
+     (the well-formedness test in `search.c` can be dropped with the same result).
    - This agrees with Liu's published list (Zenodo 10.5281/zenodo.21806548).
 
 Among all 27,865 invertible Calabi-Yau polynomials in five variables
