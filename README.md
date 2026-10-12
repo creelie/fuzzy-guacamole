@@ -116,6 +116,11 @@ cd lean && lake exe cache get && lake build && lake env lean Axioms.lean
 Tools: elan (the toolchain is pinned in `lean/lean-toolchain`), gcc with
 OpenMP, g++ (C++17), Julia, Python 3 with NumPy, and pdflatex for the paper.
 
+## Archive
+
+Zenodo, all versions: [10.5281/zenodo.23319498](https://doi.org/10.5281/zenodo.23319498);
+release v1.0.0: [10.5281/zenodo.23319499](https://doi.org/10.5281/zenodo.23319499).
+
 ## License
 
 MIT (see `LICENSE`).
