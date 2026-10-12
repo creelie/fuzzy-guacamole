@@ -111,7 +111,7 @@
    "configFile": "lakefile.toml"
   }
  ],
- "name": "TauMaximal",
+ "name": "LiuIndex",
  "lakeDir": ".lake",
  "fixedToolchain": false
 }

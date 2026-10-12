@@ -1,0 +1,34 @@
+{
+  "title": "A counterexample to Liu's conjecture on Fano indices in dimension four: paper, Lean 4 formalization and verification code",
+  "description": "<p>H. Liu (arXiv:2608.03434, Conjecture 4.2) conjectured that, in each dimension n &gt;= 2, the Fano indices of canonical weighted projective n-spaces (together with 1, ..., n), the indices of terminal Calabi-Yau n-folds and the indices of n-dimensional log canonical singularities form the same set. The paper shows that 1389 is the index of a terminal Calabi-Yau fourfold and of a four-dimensional log canonical singularity that is not klt, both built from a symmetry of order 1389 of the hypersurface x0^77 x1 + x1^67 x2 + x2^7 x0 + x3^3 + x4^2 = 0 in P(1,1,11,26,39), and that 1389 is not the Fano index of any canonical weighted projective fourspace. So the conjecture fails in dimension four.</p><p><code>paper/</code> holds the LaTeX source (amsart) and the compiled PDF; <code>dist/</code> holds the PDF, an anonymized PDF for double-anonymous review, the LaTeX source zip, the arXiv tarball and <code>MasterLiuIndexConjectureZip.zip</code> with every file of the repository. <code>lean/</code> is a Lean 4 and Mathlib project proving 1389 notin I_{4,wps}, with Kasprzyk's criterion as the definition of canonical, through a certificate of 4,022 units checked by decide +kernel, and the algebraic lemmas on the hypersurface; its theorems depend only on the axioms propext, Classical.choice and Quot.sound. <code>code/</code> contains exhaustive searches over all 1,301,769,806 partitions of 1389 into five parts in C, C++, Julia and Python, and <code>scripts/run_all.sh</code> regenerates the certificate, builds the Lean project, checks the axioms and runs all searches.</p>",
+  "upload_type": "software",
+  "license": "mit",
+  "access_right": "open",
+  "creators": [
+    {
+      "name": "Bhattacharjee, Deep",
+      "orcid": "0000-0003-0466-750X"
+    }
+  ],
+  "keywords": [
+    "Fano index",
+    "weighted projective space",
+    "Calabi-Yau variety",
+    "log canonical singularity",
+    "index",
+    "Lean 4"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "arXiv:2608.03434",
+      "relation": "references",
+      "scheme": "arxiv"
+    },
+    {
+      "identifier": "10.5281/zenodo.21806548",
+      "relation": "references",
+      "scheme": "doi"
+    }
+  ],
+  "language": "eng"
+}

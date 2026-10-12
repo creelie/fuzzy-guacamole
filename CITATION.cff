@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "A counterexample to Liu's conjecture on Fano indices in dimension four"
+type: software
+authors:
+  - family-names: Bhattacharjee
+    given-names: Deep
+    orcid: "https://orcid.org/0000-0003-0466-750X"
+    affiliation: "Formerly, Electro-Gravitational Space Propulsion Laboratory (EGSPL), Bhubaneswar, Odisha 751030, India"
+    email: d.bhattacharjee@erl-forschung.de
+version: 1.0.0
+date-released: 2026-10-12
+license: MIT
+repository-code: "https://github.com/creelie/fuzzy-guacamole"
+keywords:
+  - Fano index
+  - weighted projective space
+  - Calabi-Yau variety
+  - log canonical singularity
+  - index
+  - Lean 4
+abstract: >-
+  H. Liu conjectured that, in each dimension n >= 2, the Fano indices of
+  canonical weighted projective n-spaces, the indices of terminal Calabi-Yau
+  n-folds and the indices of n-dimensional log canonical singularities form
+  the same set. We show that 1389 is the index of a terminal Calabi-Yau
+  fourfold and of a four-dimensional log canonical singularity, and is not
+  the Fano index of any canonical weighted projective fourspace. The
+  non-membership is checked in the Lean 4 kernel.
+references:
+  - type: article
+    title: "On Fano indices of weighted projective spaces"
+    authors:
+      - family-names: Liu
+        given-names: Haidong
+    year: 2026
+    url: "https://arxiv.org/abs/2608.03434"
+    notes: "arXiv:2608.03434v3, Conjecture 4.2"
