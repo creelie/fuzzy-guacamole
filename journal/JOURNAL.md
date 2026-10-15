@@ -7,7 +7,7 @@
 | ISSN | 0002-9939 (print), 1088-6826 (electronic) |
 | Homepage | https://www.ams.org/proc |
 | Submission | https://ams.org/procsubmit: upload a PDF through the AMS Initial Manuscript Submission form (Centralized Manuscript Processing); questions to jrnl-initsub@ams.org |
-| Review | double anonymous: submit `dist/liu-index-1389-anonymous.pdf`, which has no author block and no repository link |
+| Review | double anonymous: submit `dist/LiuFanoIndexConjecture_final2-anonymous.pdf`, which has no author block and no repository link |
 | Class file | `amsart` (AMS-LaTeX article class); the author package of each AMS journal is linked from https://www.ams.org/arc/journals/journal-select.html; the paper uses plain `amsart` |
 
 ## Scope fit
@@ -27,18 +27,27 @@ MSC 2020: primary 14J32; secondary 14B05, 14J45, 14M25.
 
 ## Length and format
 
-- 6 pages in `amsart`, well under the limit of 15 printed pages.
-- Two-sentence abstract; MSC codes and keywords in the first-page footnote, as
-  `amsart` places them.
+- 8 pages in `amsart` (7 in the anonymized version), well under the limit of
+  15 printed pages, with three schematic figures; built with no overfull or
+  underfull boxes.
+- One-sentence abstract; MSC codes, keywords and the corresponding author in
+  the first-page footnotes, as `amsart` places them.
+- Two authors: Deep Bhattacharjee (corresponding author) and Ushashi
+  Bhattacharya, with addresses, e-mail addresses and ORCID iDs.
 - The source is a single file `main.tex` with the references in the source
   (`thebibliography`), so no `.bib` or `.bbl` file is needed.
-  `dist/liu-index-1389-tex.zip` and the arXiv tarball contain this file only.
+  `dist/LiuFanoIndexConjecture_final2-tex.zip` and the arXiv tarball contain
+  this file and the figures as PNG.
 - `pdflatex "\def\anonymous{}\input{main}"` gives the anonymized version
   (`scripts/build_paper.sh` builds both). The anonymized version keeps the
   statement on the use of AI tools and replaces the repository link by
   "supplied with the submission"; upload the master zip, or the repository
   without its author files, as supplementary material if the form asks for
   the code.
+- Declarations at the end: "Acknowledgements" (use of AI), "Competing
+  interests: None", "Funding: None" and "Data availability" (who computed
+  what, the Zenodo DOI of the Lean formalization and the link to the PDF in
+  `preprintLiuFanoIndexConjecture/`).
 - The pages of the AMS site (ams.org) returned HTTP 403 to the session that
   prepared this file, so the details above come from search results quoting
   those pages; read the submission page once more before submitting.
@@ -54,8 +63,8 @@ MSC 2020: primary 14J32; secondary 14B05, 14J45, 14M25.
   tools in writing the manuscript or in collecting and analysing data must
   disclose, in the methods or a similar section, which tool was used and how;
   the authors remain fully responsible for the content.
-- The paper has a section "Use of AI tools" that names Claude Code
-  (Anthropic) and says how it was used. Add the version of the tool in the
+- The paper's "Acknowledgements" name Claude Code (Anthropic) and say how
+  it was used; "Data availability" repeats it. Add the version of the tool in the
   submitted manuscript if the editors ask for it.
 - Every computational step of the non-membership 1389 notin I_{4,wps} is
   checked by the Lean 4 kernel (Section 6 of the paper); the geometric steps

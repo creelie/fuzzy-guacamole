@@ -1,35 +1,39 @@
 #!/usr/bin/env bash
-# build_paper.sh -- build the paper and the release files into dist/.
+# build_paper.sh -- build the paper and the release files.
 #
-#   dist/liu-index-1389.pdf                the compiled paper
-#   dist/liu-index-1389-anonymous.pdf      the anonymized version for double-anonymous review
-#   dist/liu-index-1389-tex.zip            LaTeX source (main.tex)
-#   dist/liu-index-1389-arxiv.tar.gz       the same source, ready for arXiv
-#   dist/MasterLiuIndexConjectureZip.zip   every file of the repository with the four files
-#                                          above, in the folder MasterLiuIndexConjectureZip/
+#   dist/LiuFanoIndexConjecture_final2.pdf             the paper
+#   dist/LiuFanoIndexConjecture_final2-anonymous.pdf   the anonymized version for
+#                                                      double-anonymous review
+#   dist/LiuFanoIndexConjecture_final2-tex.zip         LaTeX source (main.tex) with the
+#                                                      figures as PNG
+#   dist/LiuFanoIndexConjecture_final2-arxiv.tar.gz    the same source as an arXiv tarball
+#   preprintLiuFanoIndexConjecture/LiuFanoIndexConjecture.pdf
+#                                                      the paper (the only file there)
+#   MasterLiuFanoIndexConjecture_masterzipfinal2.zip   every tracked file with dist/ and the
+#                                                      preprint folder
 #
-# Needs pdflatex (amsart), git, zip and tar.
+# Needs pdflatex (amsart), git, zip and tar. The figures in paper/figures/ are made from
+# the TikZ sources in figures/ by figures/make_figures.sh.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-PAPER="$ROOT/paper"
-DIST="$ROOT/dist"
-NAME=liu-index-1389
-MASTER=MasterLiuIndexConjectureZip
+cd "$ROOT"
 for t in pdflatex git zip tar; do
   command -v "$t" >/dev/null || { echo "missing tool: $t" >&2; exit 2; }
 done
-mkdir -p "$DIST"
+
+NAME=LiuFanoIndexConjecture
+PRE=preprint$NAME
+MASTER=Master${NAME}_masterzipfinal2.zip
 
 latex() { pdflatex -interaction=nonstopmode -halt-on-error "$@" > /dev/null; }
-build() { # build <jobname> <input>
-  rm -f "$1.aux" "$1.out"
+build() { # build <jobname> <input>, run inside paper/
+  rm -f "$1.aux" "$1.out" "$1.log"
   for run in 1 2 3 4; do
     latex -jobname="$1" "$2"
     grep -q "Rerun to get" "$1.log" || break
   done
-  if grep -q "Overfull\|Underfull\|undefined\|Rerun to get" "$1.log"; then
-    grep "Overfull\|Underfull\|undefined\|Rerun to get" "$1.log"
+  if grep -E "Overfull|Underfull|undefined|Rerun to get" "$1.log"; then
     echo "build_paper.sh: fix the warnings above" >&2
     exit 1
   fi
@@ -37,41 +41,39 @@ build() { # build <jobname> <input>
 }
 
 echo "== paper"
-cd "$PAPER"
-build main main.tex
-cp main.pdf "$DIST/$NAME.pdf"
-build anonymous '\def\anonymous{}\input{main}'
-mv anonymous.pdf "$DIST/$NAME-anonymous.pdf"
+( cd paper && build main main.tex && build anonymous '\def\anonymous{}\input{main}' )
+
+rm -rf dist
+mkdir -p dist "$PRE"
+cp paper/main.pdf "dist/${NAME}_final2.pdf"
+mv paper/anonymous.pdf "dist/${NAME}_final2-anonymous.pdf"
+cp paper/main.pdf "$PRE/$NAME.pdf"
 
 STAGE="$(mktemp -d)"
 trap 'rm -rf "$STAGE"' EXIT
 
-echo "== tex.zip"
-mkdir -p "$STAGE/$NAME"
-cp main.tex "$STAGE/$NAME/"
-rm -f "$DIST/$NAME-tex.zip"
-( cd "$STAGE" && zip -qrX "$DIST/$NAME-tex.zip" "$NAME" )
+echo "== tex zip and arXiv tarball"
+SRC="$STAGE/${NAME}_final2-tex"
+mkdir -p "$SRC/figures"
+cp paper/main.tex "$SRC/"
+cp paper/figures/*.png "$SRC/figures/"
+( cd "$SRC" && latex main.tex && latex main.tex && rm -f main.aux main.log main.out main.pdf )
+( cd "$STAGE" && zip -qrX "${NAME}_final2-tex.zip" "${NAME}_final2-tex" )
+mv "$STAGE/${NAME}_final2-tex.zip" dist/
+tar -czf "dist/${NAME}_final2-arxiv.tar.gz" -C "$SRC" main.tex figures
 
-echo "== arXiv tarball"
-mkdir -p "$STAGE/arxiv"
-cp main.tex "$STAGE/arxiv/"
-( cd "$STAGE/arxiv" && latex main.tex && latex main.tex && rm -f main.aux main.log main.out main.pdf )
-tar -czf "$DIST/$NAME-arxiv.tar.gz" -C "$STAGE/arxiv" main.tex
-
-echo "== $MASTER.zip"
-cd "$ROOT"
-mkdir -p "$STAGE/master/$MASTER"
-git ls-files --cached --others --exclude-standard -z \
-  | grep -zv "^dist/$MASTER.zip\$" \
+echo "== $MASTER"
+mkdir -p "$STAGE/master/Master$NAME"
+git ls-files -z | grep -zvE "^(dist/|$PRE/|$MASTER\$)" \
   | while IFS= read -r -d '' f; do
       [ -e "$f" ] || continue
-      mkdir -p "$STAGE/master/$MASTER/$(dirname "$f")"
-      cp -p "$f" "$STAGE/master/$MASTER/$f"
+      mkdir -p "$STAGE/master/Master$NAME/$(dirname "$f")"
+      cp -p "$f" "$STAGE/master/Master$NAME/$f"
     done
-mkdir -p "$STAGE/master/$MASTER/dist"
-cp "$DIST/$NAME.pdf" "$DIST/$NAME-anonymous.pdf" "$DIST/$NAME-tex.zip" "$DIST/$NAME-arxiv.tar.gz" \
-  "$STAGE/master/$MASTER/dist/"
-rm -f "$DIST/$MASTER.zip"
-( cd "$STAGE/master" && zip -qrX "$DIST/$MASTER.zip" "$MASTER" )
+mkdir -p "$STAGE/master/Master$NAME/dist" "$STAGE/master/Master$NAME/$PRE"
+cp dist/* "$STAGE/master/Master$NAME/dist/"
+cp "$PRE/$NAME.pdf" "$STAGE/master/Master$NAME/$PRE/"
+rm -f "$MASTER"
+( cd "$STAGE/master" && zip -qrX "$ROOT/$MASTER" "Master$NAME" )
 
-ls -l "$DIST"
+echo "built: $(ls dist | tr '\n' ' ')$PRE/$NAME.pdf $MASTER"

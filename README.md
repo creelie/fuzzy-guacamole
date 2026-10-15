@@ -1,6 +1,11 @@
 # A counterexample to Liu's conjecture on Fano indices in dimension four
 
-Author: Deep Bhattacharjee (ORCID 0000-0003-0466-750X).
+Authors: Deep Bhattacharjee (corresponding author; ORCID 0000-0003-0466-750X;
+itsdeep@live.com, d.bhattacharjee@erl-forschung.de) and Ushashi Bhattacharya
+(ORCID 0009-0002-2254-3914; rai.bhattacharya.in@gmail.com).
+
+The paper: [`preprintLiuFanoIndexConjecture/LiuFanoIndexConjecture.pdf`](preprintLiuFanoIndexConjecture/LiuFanoIndexConjecture.pdf).
+Everything in one file: [`MasterLiuFanoIndexConjecture_masterzipfinal2.zip`](https://github.com/creelie/fuzzy-guacamole/raw/main/MasterLiuFanoIndexConjecture_masterzipfinal2.zip).
 
 H. Liu (*On Fano indices of weighted projective spaces*,
 [arXiv:2608.03434v3](https://arxiv.org/abs/2608.03434), Conjecture 4.2)
@@ -89,7 +94,9 @@ of Sections 2 to 4 of the paper, which is proved there by hand.
 
 | Path | Contents |
 |---|---|
-| `paper/` | LaTeX source (`main.tex`, `amsart`) and the compiled `main.pdf` |
+| `preprintLiuFanoIndexConjecture/` | the paper as a PDF, the only file in the folder |
+| `paper/` | LaTeX source (`main.tex`, `amsart`), the figures as PNG and the compiled `main.pdf` |
+| `figures/` | TikZ sources of the three schematic figures and `make_figures.sh`, which writes them to `paper/figures/` |
 | `lean/LiuIndex/Algebra.lean` | F, g and their properties (Mathlib) |
 | `lean/LiuIndex/Age.lean` | ages, Kasprzyk's criterion, `Iwps4`, the reduction to sorted 4-tuples (Mathlib) |
 | `lean/LiuIndex/Check/` | the packed-lane checker and its soundness proof (core Lean) |
@@ -100,9 +107,11 @@ of Sections 2 to 4 of the paper, which is proved there by hand.
 | `code/` | exhaustive search over all 1,301,769,806 partitions of 1389 into five parts, in C (`c/`), C++ (`cpp/`), Julia (`julia/`) and Python (`python/`) |
 | `results/` | outputs of the four searches (`canonical=0` at q = 1389) and the control q = 1383, which finds the canonical P(674, 461, 195, 35, 18) |
 | `scripts/run_all.sh` | regenerates the certificate, builds the Lean project, checks the axioms and runs all searches |
-| `scripts/build_paper.sh` | builds the files in `dist/` |
+| `scripts/build_paper.sh` | builds the files in `dist/`, the preprint folder and the master zip |
 | `journal/JOURNAL.md` | target journal (Proceedings of the AMS), format rules and AI policy |
-| `dist/` | the paper PDF, the anonymized PDF for review, the LaTeX source zip, the arXiv tarball and `MasterLiuIndexConjectureZip.zip`, which holds every file of the repository |
+| `dist/` | `LiuFanoIndexConjecture_final2.pdf`, the anonymized `_final2-anonymous.pdf` for review, the LaTeX source zip `_final2-tex.zip` (with the figures as PNG) and the arXiv tarball `_final2-arxiv.tar.gz` |
+| `MasterLiuFanoIndexConjecture_masterzipfinal2.zip` | every file of the repository with `dist/` and the preprint folder |
+| `.github/workflows/` | `verify.yml` (the Lean kernel check, the four searches and the paper on every pull request) and `release.yml` (runs the checks and publishes a release) |
 
 ## Running the checks
 
@@ -120,6 +129,8 @@ OpenMP, g++ (C++17), Julia, Python 3 with NumPy, and pdflatex for the paper.
 
 Zenodo, all versions: [10.5281/zenodo.23319498](https://doi.org/10.5281/zenodo.23319498);
 release v1.0.0: [10.5281/zenodo.23319499](https://doi.org/10.5281/zenodo.23319499).
+Release v2.0.0 (two authors, figures, the declarations of the journal and the
+preprint folder) gets its DOI when it is published.
 
 ## License
 
