@@ -1,0 +1,65 @@
+name: release
+
+# Run by hand from the Actions tab (or the API) after the PR is merged: it
+# regenerates the certificate, builds the Lean project and checks its axioms,
+# runs the C and C++ searches with the control, checks the release files, tags
+# the chosen commit and publishes a GitHub release with the files in dist/ and
+# the notes in .github/RELEASE_NOTES.md. Zenodo archives the release and mints
+# a DOI, since the repository is switched on at
+# https://zenodo.org/account/settings/github/. The Julia and Python searches run
+# in verify.yml on every pull request.
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag, e.g. v2.0.0"
+        required: true
+        default: "v2.0.0"
+      target:
+        description: "Branch or commit to tag"
+        required: true
+        default: "main"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.target }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install elan
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Certificate, Lean kernel check and axioms; C and C++ searches with the control
+        run: SEARCHES="c cpp" OUT="$RUNNER_TEMP/out" bash scripts/run_all.sh
+      - name: Check the release files
+        run: |
+          for f in dist/LiuFanoIndexConjecture_final2.pdf \
+                   dist/LiuFanoIndexConjecture_final2-anonymous.pdf \
+                   dist/LiuFanoIndexConjecture_final2-tex.zip \
+                   dist/LiuFanoIndexConjecture_final2-arxiv.tar.gz \
+                   preprintLiuFanoIndexConjecture/LiuFanoIndexConjecture.pdf \
+                   MasterLiuFanoIndexConjecture_masterzipfinal2.zip; do
+            test -s "$f" || { echo "missing $f"; exit 1; }
+          done
+          test "$(ls preprintLiuFanoIndexConjecture)" = LiuFanoIndexConjecture.pdf
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag }}
+          TARGET: ${{ inputs.target }}
+        run: |
+          gh release create "$TAG" dist/* \
+            --target "$TARGET" \
+            --title "$TAG: A counterexample to Liu's conjecture on Fano indices in dimension four" \
+            --notes-file .github/RELEASE_NOTES.md

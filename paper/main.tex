@@ -1,5 +1,6 @@
 \documentclass{amsart}
 \usepackage{amssymb}
+\usepackage{graphicx}
 \usepackage[hidelinks]{hyperref}
 
 % Compile with  pdflatex "\def\anonymous{}\input{main}"  for the anonymized
@@ -22,6 +23,8 @@
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\PP}{\mathbb{P}}
 \newcommand{\A}{\mathbb{A}}
+\newcommand{\zenodoID}{10.5281/zenodo.23319498}
+\newcommand{\preprintURL}{https://github.com/creelie/fuzzy-guacamole/blob/main/preprintLiuFanoIndexConjecture/LiuFanoIndexConjecture.pdf}
 
 \begin{document}
 
@@ -30,16 +33,19 @@
 \ifanon\else
 \author{Deep Bhattacharjee}
 \address{Formerly, Electro-Gravitational Space Propulsion Laboratory (EGSPL),\newline Bhubaneswar, Odisha 751030, India}
-\email{d.bhattacharjee@erl-forschung.de}
 \email{itsdeep@live.com}
-\thanks{ORCID: 0000-0003-0466-750X}
+\email{d.bhattacharjee@erl-forschung.de}
+\author{Ushashi Bhattacharya}
+\address{Formerly, National Taiwan University, Taipei 106319, Taiwan}
+\email{rai.bhattacharya.in@gmail.com}
+\thanks{Corresponding author: Deep Bhattacharjee. ORCID iDs: Deep Bhattacharjee 0000-0003-0466-750X; Ushashi Bhattacharya 0009-0002-2254-3914.}
 \fi
 
 \subjclass[2020]{Primary 14J32; Secondary 14B05, 14J45, 14M25}
 \keywords{Fano index, weighted projective space, Calabi--Yau variety, log canonical singularity, index}
 
 \begin{abstract}
-H.~Liu conjectured that, in each dimension $n\geq 2$, the Fano indices of canonical weighted projective $n$-spaces, the indices of terminal Calabi--Yau $n$-folds and the indices of $n$-dimensional log canonical singularities form the same set. We show that $1389$ is the index of a terminal Calabi--Yau fourfold and of a four-dimensional log canonical singularity, and is not the Fano index of any canonical weighted projective fourspace.
+We prove that Liu's conjecture on Fano indices fails in dimension four: $1389$ is the index of a terminal Calabi--Yau fourfold and of a four-dimensional log canonical singularity, but it is not the Fano index of any canonical weighted projective space of dimension four.
 \end{abstract}
 
 \maketitle
@@ -63,7 +69,14 @@ Liu proves the conjecture for $n\leq3$ \cite[Proposition~4.3]{Liu} and computes 
 $1389\in\It\cap\Il$ and $1389\notin\Iw$. In particular, Conjecture~\ref{conj:liu} fails for $n=4$.
 \end{theorem}
 
-The two memberships come from a symmetry of order $1389$ of one Calabi--Yau threefold, the hypersurface $X_{78}$ of $\PP(1,1,11,26,39)$ (Sections~\ref{sec:x}--\ref{sec:loc}). The non-membership is a finite statement about the $1{,}301{,}769{,}806$ partitions of $1389$ into five parts (Section~\ref{sec:wps}). It is proved in the Lean~4 kernel from a certificate of witnesses, together with the polynomial identities of Section~\ref{sec:x} (Section~\ref{sec:lean}).
+The two memberships come from a symmetry of order $1389$ of one Calabi--Yau threefold, the hypersurface $X_{78}$ of $\PP(1,1,11,26,39)$ (Sections~\ref{sec:x}--\ref{sec:loc}). The non-membership is a finite statement about the $1{,}301{,}769{,}806$ partitions of $1389$ into five parts (Section~\ref{sec:wps}). It is proved in the Lean~4 kernel from a certificate of witnesses, together with the polynomial identities of Section~\ref{sec:x} (Section~\ref{sec:lean}). Figure~\ref{fig:roadmap} shows the plan of the proof.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_roadmap.png}
+\caption{The plan of the proof. One symmetry $g$ of order $1389$ of the threefold $X$ gives a terminal Calabi--Yau fourfold of index $1389$ (Section~\ref{sec:term}) and a log canonical singularity of index $1389$ (Section~\ref{sec:loc}); no canonical weighted projective fourspace has Fano index $1389$ (Section~\ref{sec:wps}).}
+\label{fig:roadmap}
+\end{figure}
 
 \begin{remark}\label{rem:literal}
 Read literally, $\Il$ contains every positive integer: for $m\geq2$ the group $\mu_m$ acting on $\C^4$ with weights $(1,1,1,m-2)$ is free in codimension one, so $\C^4/\mu_m$ is klt, and $dx_1\wedge\dots\wedge dx_4$ has weight $m+1\equiv1\pmod m$, so its index is $m$ (by the argument in the proof of Proposition~\ref{prop:loc}). Since $3487\notin\Iw$ by \cite[Theorem~4.4]{Liu}, the literal reading fails at once, and the intended reading of $\mathrm{I}_{n,\mathrm{loc}}$ concerns log canonical singularities that are not klt. The singularity of Proposition~\ref{prop:loc} is log canonical and not klt, so Theorem~\ref{thm:main} holds for both readings.
@@ -151,6 +164,13 @@ The Jacobian of $\varphi_i$ is $w_iy_i^{\sum w_j-1}$, so
 and the pullback of $\sigma$ to $V_i$ is $w_iy_i^{-1}$ times a generator of $\omega_{V_i}$. Thus the pullback of $\sigma$ to $W$ is a rational section of $\omega_W$ with divisor $-E_W$, that is, $K_W+E_W=\psi^*K_C$ for $\psi\colon W\to C$. By \cite[Lemma~2.30]{KM}, every divisor over $C$ has the same discrepancy for $C$ as for $(W,E_W)$. So $C$ is log canonical, and $E_W$ has discrepancy $-1$, so $C$ is not klt.
 \end{proof}
 
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_blowup.png}
+\caption{The proof of Lemma~\ref{lem:cone}. The weighted blowup $\psi$ replaces the vertex of $C$ by $E_W\cong X$, and $K_W+E_W=\psi^*K_C$. On the chart $V_i$ the pair $(V_i,D_i)$ is a smooth variety with a smooth divisor, and $V_i\to W_i$ is a quotient by $\mu_{w_i}$ that is \'etale in codimension one.}
+\label{fig:blowup}
+\end{figure}
+
 \begin{proposition}\label{prop:loc}
 Let $Y=C/G$ and let $P\in Y$ be the image of $0$. Then $P\in Y$ is a four-dimensional log canonical singularity that is not klt and has index $1389$. In particular, $1389\in\Il$.
 \end{proposition}
@@ -190,8 +210,15 @@ because $((ka+q-1)\bmod q)+1$ equals the residue of $ka$ when that residue is po
 \[
 \Big\lfloor\frac{c_i+k\delta_i}{q}\Big\rfloor=\#\Big\{j\geq1:\ \delta_i\geq\Big\lceil\frac{jq-c_i}{k}\Big\rceil\Big\},
 \]
-a sum of at most $\lfloor(c_i+7k)/q\rfloor$ indicator functions of $\delta_i$. The checker stores the $8^4$ points of a box in $17$-bit fields of one natural number and evaluates \eqref{eq:test}, the order conditions and the linear condition for all of them by additions, multiplications by integers, shifts and bitwise conjunctions; a box passes when every admissible point satisfies \eqref{eq:test} for some listed $k$. Lean proves that a passing box has this property, and the kernel evaluates the checker on all boxes.
+a sum of at most $\lfloor(c_i+7k)/q\rfloor$ indicator functions of $\delta_i$. The checker stores the $8^4$ points of a box in $17$-bit fields of one natural number and evaluates \eqref{eq:test}, the order conditions and the linear condition for all of them by additions, multiplications by integers, shifts and bitwise conjunctions; a box passes when every admissible point satisfies \eqref{eq:test} for some listed $k$. The soundness of the checker, namely that a passing box has this property, is proved in Lean, and the kernel evaluates the checker on all boxes.
 \end{proof}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_boxes.png}
+\caption{The certificate of Proposition~\ref{prop:cert}. The sorted weights with $2a_1+a_2+a_3+a_4\leq q$ are covered by boxes of $8^4$ points (drawn in the coordinates $a_1,a_2,a_3$). For each box the certificate lists values of $k$; every point of the box is served by one of them. The right panel shows the points of one slice of one box, coloured by the listed value that serves them.}
+\label{fig:boxes}
+\end{figure}
 
 \begin{theorem}\label{thm:wps}
 Every $a\in\Z_{>0}^5$ with $\sum a_i=1389$ has $\age_a(k)=4$ for some $k\in\{2,\dots,1387\}$. Hence no well-formed weighted projective space $\PP(a_0,\dots,a_4)$ of Fano index $1389$ has canonical singularities, and $1389\notin\Iw$.
@@ -206,68 +233,66 @@ Combine Propositions~\ref{prop:term} and~\ref{prop:loc} with Theorem~\ref{thm:wp
 \end{proof}
 
 \begin{remark}
-Since $\varphi(1389)=924\leq984$, the number $1389$ lies in the set $\{m:\varphi(m)\leq984\}$ that contains $\Iw$ by \cite[Theorem~4.4]{Liu}; it is one of the elements of the set $\mathrm J_4$ of \cite[\S4]{Liu}. Theorem~\ref{thm:wps} agrees with the list \cite{LiuData}. The neighbouring index $1383$ lies in $\Iw$: $\PP(674,461,195,35,18)$ is well formed and passes Kasprzyk's criterion.
+Since $\varphi(1389)=924\leq984$, the number $1389$ lies in the set $\{m:\varphi(m)\leq984\}$ that contains $\Iw$ by \cite[Theorem~4.4]{Liu}; it is one of the elements of the set $\mathrm J_4$ of \cite[Section~4]{Liu}. Theorem~\ref{thm:wps} agrees with the list \cite{LiuData}. The neighbouring index $1383$ lies in $\Iw$: $\PP(674,461,195,35,18)$ is well formed and passes Kasprzyk's criterion.
 \end{remark}
 
 \section{Formal verification}\label{sec:lean}
 
-The Lean~4 project accompanying this paper \cite{Lean,Mathlib} proves the statements below. The kernel checks every proof, and each theorem depends on no axioms beyond \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}. In Lean, $\Iw$ is the set \texttt{LiuIndex.Iwps4}: the union of $\{1,2,3,4\}$ with the sums $\sum a_i$ over well-formed $a\in\Z_{>0}^5$ satisfying Kasprzyk's criterion.
-\begin{center}
-\begin{tabular}{ll}
-Statement & Lean theorem\\
-\hline
-Lemma~\ref{lem:F}(1) & \texttt{Liu1389.weights\_sum}\\
- & \texttt{Liu1389.F\_isWeightedHomogeneous}\\
-Lemma~\ref{lem:F}(2) & \texttt{Liu1389.wellFormed\_P}\\
- & \texttt{Liu1389.wellFormed\_X}\\
-Lemma~\ref{lem:F}(3) & \texttt{Liu1389.quasiSmooth}\\
-Lemma~\ref{lem:g}(1) & \texttt{Liu1389.F\_invariant}\\
-Lemma~\ref{lem:g}(2) & \texttt{Liu1389.det\_isPrimitiveRoot}\\
-Lemma~\ref{lem:g}(3) & \texttt{Liu1389.fixed\_of\_pow}\\
-Proposition~\ref{prop:cert} & \texttt{LiuCert.witness}\\
-Theorem~\ref{thm:wps}, first part & \texttt{LiuIndex.exists\_age\_four}\\
-$1389\notin\Iw$ & \texttt{LiuIndex.not\_mem\_Iwps4}
-\end{tabular}
-\end{center}
-The certificate of Proposition~\ref{prop:cert} is split into $4{,}022$ propositions of the form ``the checker returns \texttt{true} on this list'', each closed by \texttt{decide +kernel}, so the kernel itself evaluates the checker; no compiled code is trusted. Checking them takes about $15$ minutes on four cores. The steps that rest on the literature, namely Kasprzyk's criterion, the results of \cite{IF} and \cite{ETW}, and the singularity theory of Sections~\ref{sec:x}--\ref{sec:loc}, are not formalized, since Mathlib does not yet contain weighted projective spaces or discrepancies.
+The finite and algebraic parts of the proof are formalized in Lean~4 with its mathematical library \cite{Lean,Mathlib}. In the formalization the set $\Iw$ is defined as the union of $\{1,2,3,4\}$ with the sums $\sum a_i$ over the well-formed $a\in\Z_{>0}^5$ that satisfy Kasprzyk's criterion. The formal statements are Lemma~\ref{lem:F}, Lemma~\ref{lem:g}, Proposition~\ref{prop:cert}, the first part of Theorem~\ref{thm:wps}, and the statement $1389\notin\Iw$. The kernel checks every proof, and each of these theorems depends only on the axioms of propositional extensionality, choice and quotient soundness.
 
-Programs in C, C++, Julia and Python, independent of the Lean code, enumerate all $1{,}301{,}769{,}806$ partitions of $1389$ into five parts, test Kasprzyk's criterion on the $874{,}763{,}737$ well-formed ones, and find no canonical one.
+The certificate of Proposition~\ref{prop:cert} is split into $4{,}022$ statements, each asserting that the checker accepts one list of boxes. Each statement is closed by evaluating the checker in the kernel, so no compiled code is trusted; checking all of them takes about $15$ minutes on four cores. The steps that rest on the literature, namely Kasprzyk's criterion, the results of \cite{IF} and \cite{ETW}, and the singularity theory of Sections~\ref{sec:x}--\ref{sec:loc}, are proved in the text and not formalized, since the library does not yet contain weighted projective spaces or discrepancies.
 
-\section*{Use of AI tools}
-The author used the generative AI tool Claude Code (Anthropic) to develop the proofs, to write the Lean formalization and the verification programs, and to draft this article. The author reviewed the content and takes full responsibility for it.
+Independently of the formalization, programs in C, C++, Julia and Python enumerate all $1{,}301{,}769{,}806$ partitions of $1389$ into five parts, test Kasprzyk's criterion on the $874{,}763{,}737$ well-formed ones, and find no canonical one. The same enumeration for $q=1383$ finds $\PP(674,461,195,35,18)$.
+
+\section*{Acknowledgements}
+The authors used the generative AI tool Claude (Anthropic), through Claude Code, to assist with the proofs, the Lean formalization, the computations and the preparation of this article. The authors reviewed and edited the content and take full responsibility for it.
+
+\section*{Competing interests}
+None.
+
+\section*{Funding}
+None.
 
 \section*{Data availability}
+\begingroup\raggedright
 \ifanon
-The Lean formalization, the certificate generator, the search programs and a script that runs all of them are supplied with the submission.
+The computations and the Lean formalization were carried out by the authors with the help of AI assistance (Claude, Anthropic). The Lean formalization, the certificate generator and the search programs are supplied with the submission.\par
 \else
-The repository \url{https://github.com/creelie/fuzzy-guacamole} contains the Lean formalization, the certificate generator, the search programs and a script that runs all of them. It is archived on Zenodo under \href{https://doi.org/10.5281/zenodo.23319498}{doi:10.5281/zenodo.23319498} (all versions; release v1.0.0 is \href{https://doi.org/10.5281/zenodo.23319499}{doi:10.5281/zenodo.23319499}).
+Deep Bhattacharjee computed the Lean formalization and the Julia, C, C++, shell and Python computations with the help of AI assistance (Claude, Anthropic). The Lean formalization of the finite and algebraic parts of the proof, together with the certificate generator and the search programs, is archived at Zenodo \cite{archive}, doi:\href{https://doi.org/\zenodoID}{\zenodoID}. The paper is available at \url{\preprintURL}.\par
 \fi
+\endgroup
 
 \begin{thebibliography}{99}
+\raggedright
+
+\ifanon\else
+\bibitem{archive}
+D.~Bhattacharjee and U.~Bhattacharya, \emph{A counterexample to Liu's conjecture on Fano indices in dimension four: Lean formalization and programs}, Zenodo, 2026, doi:\href{https://doi.org/\zenodoID}{\zenodoID}.
+\fi
 
 \bibitem{Mathlib}
-The mathlib Community, \emph{The Lean mathematical library}, in: Proceedings of the 9th ACM SIGPLAN International Conference on Certified Programs and Proofs (CPP 2020), ACM, 2020, pp.~367--381.
+The mathlib Community, \emph{The Lean mathematical library}, in: Proceedings of the 9th ACM SIGPLAN International Conference on Certified Programs and Proofs (CPP 2020), ACM, 2020, pp.~367--381, doi:\href{https://doi.org/10.1145/3372885.3373824}{10.1145/3372885.3373824}.
 
 \bibitem{ETW}
 L.~Esser, B.~Totaro and C.~Wang, \emph{Calabi--Yau varieties of large index}, Algebr. Geom., to appear; arXiv:2209.04597.
 
 \bibitem{IF}
-A.~R.~Iano-Fletcher, \emph{Working with weighted complete intersections}, in: Explicit birational geometry of 3-folds, London Math. Soc. Lecture Note Ser. 281, Cambridge Univ. Press, Cambridge, 2000, pp.~101--173.
+A.~R.~Iano-Fletcher, \emph{Working with weighted complete intersections}, in: Explicit birational geometry of 3-folds, London Math. Soc. Lecture Note Ser. 281, Cambridge Univ. Press, Cambridge, 2000, pp.~101--174, doi:\href{https://doi.org/10.1017/CBO9780511758942.005}{10.1017/CBO9780511758942.005}.
 
 \bibitem{Kas}
 A.~M.~Kasprzyk, \emph{Classifying terminal weighted projective space}, arXiv:1304.3029.
 
 \bibitem{KM}
-J.~Koll\'ar and S.~Mori, \emph{Birational geometry of algebraic varieties}, Cambridge Tracts in Math. 134, Cambridge Univ. Press, Cambridge, 1998.
+J.~Koll\'ar and S.~Mori, \emph{Birational geometry of algebraic varieties}, Cambridge Tracts in Math. 134, Cambridge Univ. Press, Cambridge, 1998, doi:\href{https://doi.org/10.1017/CBO9780511662560}{10.1017/CBO9780511662560}.
 
 \bibitem{Liu}
 H.~Liu, \emph{On Fano indices of weighted projective spaces}, arXiv:2608.03434v3, 2026.
 
 \bibitem{LiuData}
-H.~Liu, \emph{Fano indices of four-dimensional canonical weighted projective spaces} (data and code), Zenodo, \url{https://doi.org/10.5281/zenodo.21806548}.
+H.~Liu, \emph{Fano indices of four-dimensional canonical weighted projective spaces} (data and code), Zenodo, doi:\href{https://doi.org/10.5281/zenodo.21806548}{10.5281/zenodo.21806548}.
 
 \bibitem{Lean}
-L.~de~Moura and S.~Ullrich, \emph{The Lean~4 theorem prover and programming language}, in: Automated Deduction -- CADE 28, Lecture Notes in Comput. Sci. 12699, Springer, 2021, pp.~625--635.
+L.~de~Moura and S.~Ullrich, \emph{The Lean~4 theorem prover and programming language}, in: Automated Deduction -- CADE 28, Lecture Notes in Comput. Sci. 12699, Springer, 2021, pp.~625--635, doi:\href{https://doi.org/10.1007/978-3-030-79876-5_37}{10.1007/978-3-030-79876-5\_37}.
 
 \end{thebibliography}
 
