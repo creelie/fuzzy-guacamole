@@ -6,6 +6,7 @@ itsdeep@live.com, d.bhattacharjee@erl-forschung.de) and Ushashi Bhattacharya
 
 The paper: [`preprintLiuFanoIndexConjecture/LiuFanoIndexConjecture.pdf`](preprintLiuFanoIndexConjecture/LiuFanoIndexConjecture.pdf).
 Everything in one file: [`MasterLiuFanoIndexConjecture_masterzipfinal2.zip`](https://github.com/creelie/fuzzy-guacamole/raw/main/MasterLiuFanoIndexConjecture_masterzipfinal2.zip).
+Lean formalization and programs on Zenodo: [doi:10.5281/zenodo.23387505](https://doi.org/10.5281/zenodo.23387505) (version 2.0.0; all versions: [doi:10.5281/zenodo.23319498](https://doi.org/10.5281/zenodo.23319498)).
 
 H. Liu (*On Fano indices of weighted projective spaces*,
 [arXiv:2608.03434v3](https://arxiv.org/abs/2608.03434), Conjecture 4.2)
@@ -128,9 +129,9 @@ OpenMP, g++ (C++17), Julia, Python 3 with NumPy, and pdflatex for the paper.
 ## Archive
 
 Zenodo, all versions: [10.5281/zenodo.23319498](https://doi.org/10.5281/zenodo.23319498);
+release v2.0.0 (two authors, figures, the declarations of the journal and
+the preprint folder): [10.5281/zenodo.23387505](https://doi.org/10.5281/zenodo.23387505);
 release v1.0.0: [10.5281/zenodo.23319499](https://doi.org/10.5281/zenodo.23319499).
-Release v2.0.0 (two authors, figures, the declarations of the journal and the
-preprint folder) gets its DOI when it is published.
 
 ## License
 
